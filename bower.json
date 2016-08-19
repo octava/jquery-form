@@ -1,0 +1,22 @@
+{
+  "name": "octava-jquery-form",
+  "version": "0.1.0",
+  "authors": [
+    "Dmitry Kuznetsov <d@kuznetsov.io>"
+  ],
+  "main": "jquery-form.js",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/octava/jquery-form",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+  ],
+  "dependencies": {
+    "jquery-form": "~3.46.0"
+  }
+}

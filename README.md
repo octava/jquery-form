@@ -27,7 +27,7 @@ $(document).ready(function() {
         octavaForm = new window.octava.JqueryForm($form, options);
 
     octavaForm
-        .onSubmit(function(responce, $form, options, octavaForm) {
+        .onSubmit(function(response, $form, options, octavaForm) {
             console.log('onSubmit', arguments)
         })
         .onSuccess(function(response, octavaForm) {

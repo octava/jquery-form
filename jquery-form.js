@@ -52,15 +52,15 @@ var octava = (function (scope) {
             return this;
         };
 
-        this.showErrors = function (data) {
-            for (var i = 0; i < data.errors.length; i++) {
-                this.showElementError(data.errors[i]['field'], data.errors[i]['error']);
+        this.showErrors = function (response) {
+            for (var i = 0; i < response.errors.length; i++) {
+                this.showElementError(response.errors[i]['field'], response.errors[i]['error']);
             }
         };
 
-        this.showMessage = function (data) {
-            if (data.message) {
-                var $error = $(this.getMessage(data.message));
+        this.showMessage = function (response) {
+            if (response.message) {
+                var $error = $(this.getMessage(response.message));
                 $error.prependTo($form);
             }
         };
@@ -204,9 +204,9 @@ var octava = (function (scope) {
                     self.scrollToError();
                     self.reloadCaptcha();
                 },
-                beforeSubmit: function (data, $form, options) {
+                beforeSubmit: function (responce, $form, options) {
                     if ($.isFunction(submitCallback)) {
-                        if (!submitCallback(data, $form, options, self)) {
+                        if (!submitCallback(responce, $form, options, self)) {
                             return;
                         }
                     }

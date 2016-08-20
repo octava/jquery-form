@@ -49,7 +49,7 @@ $(document).ready(function() {
 ````
 
 
-### Form works with server response:
+### OctavaJqueryForm handles server response:
 
 ```json
 {

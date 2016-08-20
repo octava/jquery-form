@@ -82,6 +82,10 @@ var octava = (function (scope) {
             return '<span class="octava-jquery-form-error">' + error + '</span>';
         };
 
+        this.getForm = function() {
+            return $form;
+        };
+
         this.showElementError = function (fieldId, error) {
             var $input = $form.find('[id="' + fieldId + '"]');
             $input.after(this.getError(error));
@@ -204,9 +208,9 @@ var octava = (function (scope) {
                     self.scrollToError();
                     self.reloadCaptcha();
                 },
-                beforeSubmit: function (responce, $form, options) {
+                beforeSubmit: function (response, $form, options) {
                     if ($.isFunction(submitCallback)) {
-                        if (!submitCallback(responce, $form, options, self)) {
+                        if (!submitCallback(response, $form, options, self)) {
                             return;
                         }
                     }

@@ -1,11 +1,17 @@
 # Octava jquery-form wrapper
 
-## Usage
+## Installation
+
+```bash
+bower install octava-query-form --save
+```
+
+## Basic usage
 
 ### Include scripts
 
 ```html
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.46/jquery.form.min.js"></script> 
 <script src="octava-jquery-form/jquery-form.js"></script> 
 ```
@@ -65,3 +71,5 @@ $(document).ready(function() {
     "redirect": "http://redirect.to"
 }
 ```
+
+*For more examples see "examples" folder*.

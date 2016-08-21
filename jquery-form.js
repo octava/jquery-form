@@ -88,6 +88,7 @@ var octava = (function (scope) {
 
         this.showElementError = function (fieldId, error) {
             var $input = $form.find('[id="' + fieldId + '"]');
+
             $input.after(this.getError(error));
         };
 
@@ -104,6 +105,7 @@ var octava = (function (scope) {
 
         this.clearErrors = function () {
             $form.find('.octava-jquery-form-error,.octava-jquery-form-message').remove();
+            $form.find('.octava-jquery-form-element-error').removeClass('octava-jquery-form-element-error');
         };
 
         this.disableForm = function () {
@@ -140,15 +142,15 @@ var octava = (function (scope) {
                 stopProgressDelay: 0,
                 labels: labels,
                 success: function (response) {
-                    if (response.success === true) {
+                    if (true === response.success) {
                         if ($.isFunction(successCallback)) {
-                            if (!successCallback(response, self)) {
+                            if (false === successCallback(response, self)) {
                                 return;
                             }
                         }
                         if (response.redirect) {
                             if ($.isFunction(redirectCallback)) {
-                                if (!redirectCallback(response, self)) {
+                                if (false === redirectCallback(response, self)) {
                                     return;
                                 }
                             } else {
@@ -158,25 +160,26 @@ var octava = (function (scope) {
                         }
                         setTimeout(self.stopProgress, this.stopProgressDelay);
                         setTimeout(self.enableForm, this.enableFormDelay);
-                    } else if (response.success === false) {
+                        self.showMessage(response);
+                    } else if (false === response.success) {
                         if ($.isFunction(errorCallback)) {
-                            if (!errorCallback(response, self)) {
+                            if (false === errorCallback(response, self)) {
                                 return;
                             }
                         }
-                        self.stopProgress();
-                        self.enableForm();
+                        setTimeout(self.stopProgress, this.stopProgressDelay);
+                        setTimeout(self.enableForm, this.enableFormDelay);
                         self.showMessage(response);
                         self.showErrors(response);
                         self.scrollToError();
                     } else {
                         if ($.isFunction(fatalErrorCallback)) {
-                            if (!fatalErrorCallback(response, self)) {
+                            if (false === fatalErrorCallback(response, self)) {
                                 return;
                             }
                         }
-                        self.stopProgress();
-                        self.enableForm();
+                        setTimeout(self.stopProgress, this.stopProgressDelay);
+                        setTimeout(self.enableForm, this.enableFormDelay);
                         self.showMessage({error: labels.service_unavailable});
                         self.scrollToError();
                     }
@@ -184,33 +187,33 @@ var octava = (function (scope) {
                 },
                 error: function (response) {
                     if ($.isFunction(beforeFatalErrorCallback)) {
-                        if (!beforeFatalErrorCallback(response)) {
+                        if (false === beforeFatalErrorCallback(response)) {
                             return;
                         }
                     } else {
-                        if (response.status == 401) {
+                        if (401 == response.status) {
                             alert(labels.session_expired);
                             location.reload();
                             return;
-                        } else if (response.status == 403) {
+                        } else if (403 == response.status) {
                             self.showMessage({error: labels.access_denied});
                         }
                     }
 
                     if ($.isFunction(fatalErrorCallback)) {
-                        if (!fatalErrorCallback(response, self)) {
+                        if (false === fatalErrorCallback(response, self)) {
                             return;
                         }
                     }
-                    self.stopProgress();
-                    self.enableForm();
+                    setTimeout(self.stopProgress, this.stopProgressDelay);
+                    setTimeout(self.enableForm, this.enableFormDelay);
                     self.showMessage({error: labels.service_unavailable});
                     self.scrollToError();
                     self.reloadCaptcha();
                 },
                 beforeSubmit: function (response, $form, options) {
                     if ($.isFunction(submitCallback)) {
-                        if (!submitCallback(response, $form, options, self)) {
+                        if (false === submitCallback(response, $form, options, self)) {
                             return;
                         }
                     }
@@ -221,7 +224,7 @@ var octava = (function (scope) {
                 dataType: 'json'
             };
 
-        userOptions = (userOptions !== null && typeof(userOptions) == 'object') ? userOptions : {};
+        userOptions = (null !== userOptions && typeof(userOptions) == 'object') ? userOptions : {};
         $.extend(options, userOptions);
         $form.ajaxForm(options);
     };

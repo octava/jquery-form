@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Octava Jquery Form wrapper</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Octava Jquery Form wrapper</h1>
+    </div>
+    <form id="octava-jquery-form" action="jquery-form-response.json" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Example block-level help text here.</p>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Check me out
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.46/jquery.form.min.js"></script>
+<script src="../../jquery-form.js"></script>
+<script>
+    $(document).ready(function () {
+        var options = {
+                    'labels': {
+                        'service_unavailable': 'Service unavailable',
+                        'session_expired': 'Session expired',
+                        'access_denied': 'Access denied'
+                    },
+                    autoEnableForm: true,
+                    enableFormDelay: 0,
+                    stopProgressDelay: 0,
+                    dataType: 'json'
+                },
+                $form = $('form[id="octava-jquery-form"]'),
+                octavaForm = new window.octava.JqueryForm($form, options);
+
+        octavaForm
+                .onSubmit(function (response, $form, options, octavaForm) {
+                    console.log('onSubmit', arguments)
+                })
+                .onSuccess(function (response, octavaForm) {
+                    console.log('onSuccess', arguments);
+                })
+                .onRedirect(function (response, octavaForm) {
+                    console.log('onRedirect', arguments);
+                })
+                .onError(function (response, octavaForm) {
+                    console.log('onError', arguments);
+                })
+                .onBeforeFatalError(function (response, octavaForm) {
+                    console.log('onBeforeFatalError', arguments);
+                })
+                .onFatalError(function (response, octavaForm) {
+                    console.log('onFatalError', arguments);
+                });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "success": false,
+  "message": "Text of global error or success message, if 'success' == true",
+  "errors": [
+    {
+      "field": "exampleInputEmail1",
+      "error": "Something wrong with e-mail"
+    }
+  ],
+  "data": {},
+  "redirect": "http://redirect.to"
+}

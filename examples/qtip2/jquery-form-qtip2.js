@@ -1,14 +1,13 @@
 /**
  * Jquery Form Wrapper with qtip2
  */
-(function (octava) {
-    octava.JqueryFormQtip2 = function ($form, options) {
+(function (scope) {
+    scope.app.JqueryFormQtip2 = function ($form, options) {
         options = (null !== options && typeof(options) == 'object') ? options : {};
-        var self = new octava.JqueryForm($form, options);
+        var self = new scope.octava.JqueryForm($form, options);
 
         self.showMessage = function (response) {
             var html = [];
-            console.log(response)
             if (true === response.success) {
                 if (response.message) {
                     if (response.message) {
@@ -116,4 +115,4 @@
         self.constructor = arguments.callee;
         return self;
     };
-})(octava);
+})(window);

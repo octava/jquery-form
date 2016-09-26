@@ -131,21 +131,6 @@ var octava = (function (scope) {
         this.stopProgress = function () {
         };
 
-        this.redirect = function (response) {
-            var href = '';
-
-            if (response.redirect) {
-                href = response.redirect;
-                if ($.isFunction(redirectCallback) && false === redirectCallback(response, self)) {
-                    href = false;
-                }
-            }
-
-            if (href) {
-                location.href = href;
-            }
-        };
-
         var labels = {
                 'service_unavailable': 'Service unavailable',
                 'session_expired': 'Session expired',
@@ -164,7 +149,17 @@ var octava = (function (scope) {
                             }
                         }
 
-                        self.redirect(response);
+                        if (response.redirect) {
+                            if ($.isFunction(redirectCallback)) {
+                                if (false === redirectCallback(response, self)) {
+                                    return;
+                                }
+                            }
+
+                            location.href = response.redirect;
+                            return;
+                        }
+
                         setTimeout(self.stopProgress, this.stopProgressDelay);
                         setTimeout(self.enableForm, this.enableFormDelay);
                         self.showMessage(response);
@@ -206,7 +201,11 @@ var octava = (function (scope) {
                     } else if (403 == response.status) {
                         self.showMessage({error: labels.access_denied});
                     } else if (-1 != $.inArray(response.status, [301, 302])) {
-                        self.redirect(response);
+                        if (response.hasOwnProperty('responseJSON')
+                            && response.responseJSON.hasOwnProperty('redirect')) {
+                            location.href = response.responseJSON.redirect;
+                            return;
+                        }
                     }
 
                     if ($.isFunction(fatalErrorCallback)) {

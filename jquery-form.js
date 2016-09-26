@@ -82,7 +82,7 @@ var octava = (function (scope) {
             return '<span class="octava-jquery-form-error">' + error + '</span>';
         };
 
-        this.getForm = function() {
+        this.getForm = function () {
             return $form;
         };
 
@@ -148,16 +148,18 @@ var octava = (function (scope) {
                                 return;
                             }
                         }
+
                         if (response.redirect) {
                             if ($.isFunction(redirectCallback)) {
                                 if (false === redirectCallback(response, self)) {
                                     return;
                                 }
-                            } else {
-                                location.href = response.redirect;
-                                return;
                             }
+
+                            location.href = response.redirect;
+                            return;
                         }
+
                         setTimeout(self.stopProgress, this.stopProgressDelay);
                         setTimeout(self.enableForm, this.enableFormDelay);
                         self.showMessage(response);
@@ -190,13 +192,19 @@ var octava = (function (scope) {
                         if (false === beforeFatalErrorCallback(response)) {
                             return;
                         }
-                    } else {
-                        if (401 == response.status) {
-                            alert(labels.session_expired);
-                            location.reload();
+                    }
+
+                    if (401 == response.status) {
+                        alert(labels.session_expired);
+                        location.reload();
+                        return;
+                    } else if (403 == response.status) {
+                        self.showMessage({error: labels.access_denied});
+                    } else if (-1 != $.inArray(response.status, [301, 302])) {
+                        if (response.hasOwnProperty('responseJSON')
+                            && response.responseJSON.hasOwnProperty('redirect')) {
+                            location.href = response.responseJSON.redirect;
                             return;
-                        } else if (403 == response.status) {
-                            self.showMessage({error: labels.access_denied});
                         }
                     }
 

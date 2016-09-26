@@ -205,7 +205,7 @@ var octava = (function (scope) {
                         return;
                     } else if (403 == response.status) {
                         self.showMessage({error: labels.access_denied});
-                    } else if (-1 != [301, 302].indexOf(response.status)) {
+                    } else if (-1 != $.inArray(response.status, [301, 302])) {
                         self.redirect(response);
                     }
 

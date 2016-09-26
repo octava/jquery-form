@@ -82,7 +82,7 @@ var octava = (function (scope) {
             return '<span class="octava-jquery-form-error">' + error + '</span>';
         };
 
-        this.getForm = function() {
+        this.getForm = function () {
             return $form;
         };
 
@@ -131,6 +131,21 @@ var octava = (function (scope) {
         this.stopProgress = function () {
         };
 
+        this.redirect = function (response) {
+            var href = '';
+
+            if (response.redirect) {
+                href = response.redirect;
+                if ($.isFunction(redirectCallback) && false === redirectCallback(response, self)) {
+                    href = false;
+                }
+            }
+
+            if (href) {
+                location.href = href;
+            }
+        };
+
         var labels = {
                 'service_unavailable': 'Service unavailable',
                 'session_expired': 'Session expired',
@@ -148,16 +163,8 @@ var octava = (function (scope) {
                                 return;
                             }
                         }
-                        if (response.redirect) {
-                            if ($.isFunction(redirectCallback)) {
-                                if (false === redirectCallback(response, self)) {
-                                    return;
-                                }
-                            } else {
-                                location.href = response.redirect;
-                                return;
-                            }
-                        }
+
+                        self.redirect(response);
                         setTimeout(self.stopProgress, this.stopProgressDelay);
                         setTimeout(self.enableForm, this.enableFormDelay);
                         self.showMessage(response);
@@ -190,14 +197,16 @@ var octava = (function (scope) {
                         if (false === beforeFatalErrorCallback(response)) {
                             return;
                         }
-                    } else {
-                        if (401 == response.status) {
-                            alert(labels.session_expired);
-                            location.reload();
-                            return;
-                        } else if (403 == response.status) {
-                            self.showMessage({error: labels.access_denied});
-                        }
+                    }
+
+                    if (401 == response.status) {
+                        alert(labels.session_expired);
+                        location.reload();
+                        return;
+                    } else if (403 == response.status) {
+                        self.showMessage({error: labels.access_denied});
+                    } else if (-1 != [301, 302].indexOf(response.status)) {
+                        self.redirect(response);
                     }
 
                     if ($.isFunction(fatalErrorCallback)) {

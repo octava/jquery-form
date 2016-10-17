@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-bower install octava-query-form --save
+bower install octava-jquery-form --save
 ```
 
 ## Basic usage

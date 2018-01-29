@@ -1,0 +1,28 @@
+{
+  "name": "octava-jquery-form",
+  "version": "0.1.0",
+  "description": "Octava jquery-form wrapper",
+  "main": "jquery-form.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/octava/jquery-form.git"
+  },
+  "keywords": [
+    "jquery-form"
+  ],
+  "author": "Dmitry Kuznetsov <d@kuznetsov.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/octava/jquery-form/issues"
+  },
+  "homepage": "https://github.com/octava/jquery-form#readme",
+  "dependencies": {
+    "jquery-form": "~3.46.0"
+  }
+}

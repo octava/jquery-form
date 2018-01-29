@@ -1,6 +1,6 @@
 {
   "name": "octava-jquery-form",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Octava jquery-form wrapper",
   "main": "jquery-form.js",
   "directories": {
